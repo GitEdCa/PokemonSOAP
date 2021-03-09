@@ -1,0 +1,32 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://project.org/Poke/service"
+	targetNamespace="http://project.org/Poke/service"
+	elementFormDefault="qualified">
+	<xs:element name="getAbilitiesRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="pokemon" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="getAbilitiesResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="abilities" type="tns:abilities" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="abilities" >
+		<xs:sequence>
+			<xs:element name="ability" type="tns:ability"/>
+			<xs:element name="is_hidden" type="xs:boolean"/>
+			<xs:element name="slot" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ability">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" />
+			<xs:element name="url" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
