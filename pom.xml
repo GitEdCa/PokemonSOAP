@@ -44,6 +44,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+		    <groupId>com.fasterxml.jackson.module</groupId>
+		    <artifactId>jackson-module-jaxb-annotations</artifactId>
+		</dependency>
+				
 	</dependencies>
 
 	<build>

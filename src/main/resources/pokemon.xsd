@@ -16,6 +16,82 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	
+	<xs:element name="base_experienceRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="pokemon" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="base_experienceResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="base_experience" type="xs:int" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="held_itemsRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="pokemon" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="held_itemsResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="held_items" type="tns:held_items" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="idRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="pokemon" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="idResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id" type="xs:int"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="nameRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="pokemon" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="nameResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="name" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="location_area_encountersRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="pokemon" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="location_area_encountersResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="location_area_encounters" type="tns:location_area_encounters" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
 	<xs:complexType name="abilities" >
 		<xs:sequence>
 			<xs:element name="ability" type="tns:ability"/>
@@ -24,6 +100,80 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ability">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" />
+			<xs:element name="url" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="pokemon">
+		<xs:sequence>
+				<xs:element name="abilities" type="tns:abilities" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="base_experience" type="xs:int" />
+				<xs:element name="held_items" type="tns:held_items" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="id" type="xs:int"/>
+				<xs:element name="name" type="xs:string"/>
+				<xs:element name="location_area_encounters" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="held_items" >
+		<xs:sequence>
+			<xs:element name="item" type="tns:item"/>
+			<xs:element name="version_details" type="tns:version_details" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="item" >
+		<xs:sequence>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="url" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="version_details" >
+		<xs:sequence>
+			<xs:element name="rarity" type="xs:int"/>
+			<xs:element name="version" type="tns:version"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="version" >
+		<xs:sequence>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="url" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="location_area_encounters" >
+		<xs:sequence>
+			<xs:element name="location_area" type="tns:location_area"/>
+			<xs:element name="version_details" type="tns:version_details_loc" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="location_area" >
+		<xs:sequence>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="url" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="version_details_loc" >
+		<xs:sequence>
+			<xs:element name="encounter_details" type="tns:encounter_details" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="max_chance" type="xs:int" />
+			<xs:element name="version" type="tns:version" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="encounter_details" >
+		<xs:sequence>
+			<xs:element name="chance" type="xs:int"/>
+			<xs:element name="condition_values" type="tns:condition_values" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="max_level" type="xs:int"/>
+			<xs:element name="method" type="tns:method"/>
+			<xs:element name="min_level" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="condition_values" >
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" />
+			<xs:element name="url" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="method" >
 		<xs:sequence>
 			<xs:element name="name" type="xs:string" />
 			<xs:element name="url" type="xs:string" />

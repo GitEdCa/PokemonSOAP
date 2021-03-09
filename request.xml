@@ -1,0 +1,25 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:gs="http://project.org/Poke/service">
+<soapenv:Header/>
+<soapenv:Body>
+<!--     <gs:getAbilitiesRequest> -->
+<!--         <gs:pokemon>ditto</gs:pokemon> -->
+<!--     </gs:getAbilitiesRequest> -->
+<!--     <gs:base_experienceRequest> -->
+<!--         <gs:pokemon>ditto</gs:pokemon> -->
+<!--     </gs:base_experienceRequest> -->
+<!--     <gs:held_itemsRequest> -->
+<!--         <gs:pokemon>ditto</gs:pokemon> -->
+<!--     </gs:held_itemsRequest> -->
+<!--     <gs:idRequest> -->
+<!--         <gs:pokemon>ditto</gs:pokemon> -->
+<!--     </gs:idRequest> -->
+<!--     <gs:nameRequest> -->
+<!--         <gs:pokemon>ditto</gs:pokemon> -->
+<!--     </gs:nameRequest> -->
+    <gs:location_area_encountersRequest>
+        <gs:pokemon>ditto</gs:pokemon>
+    </gs:location_area_encountersRequest>
+</soapenv:Body>
+</soapenv:Envelope>
+
