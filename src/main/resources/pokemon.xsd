@@ -2,14 +2,14 @@
 	xmlns:tns="http://project.org/Poke/service"
 	targetNamespace="http://project.org/Poke/service"
 	elementFormDefault="qualified">
-	<xs:element name="getAbilitiesRequest">
+	<xs:element name="abilitiesRequest">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="pokemon" type="xs:string" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="getAbilitiesResponse">
+	<xs:element name="abilitiesResponse">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="abilities" type="tns:abilities" minOccurs="0" maxOccurs="unbounded"/>
