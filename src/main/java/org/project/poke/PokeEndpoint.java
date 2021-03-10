@@ -2,10 +2,12 @@ package org.project.poke;
 
 import java.util.Arrays;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.project.poke.service.AbilitiesRequest;
+import org.project.poke.service.AbilitiesResponse;
 import org.project.poke.service.BaseExperienceRequest;
 import org.project.poke.service.BaseExperienceResponse;
-import org.project.poke.service.GetAbilitiesRequest;
-import org.project.poke.service.GetAbilitiesResponse;
 import org.project.poke.service.HeldItemsRequest;
 import org.project.poke.service.HeldItemsResponse;
 import org.project.poke.service.IdRequest;
@@ -20,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -34,18 +37,25 @@ public class PokeEndpoint {
 	private static final Logger logger = LoggerFactory.getLogger(PokeEndpoint.class);
 
 	@Value("${pokemon.api.url}")
-	private static String POKEMON_API = "https://pokeapi.co/api/v2/pokemon/";
+	private String POKEMON_API;
 
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private HttpServletRequest request;
 
-	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAbilitiesRequest")
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "abilitiesRequest")
 	@ResponsePayload
-	public GetAbilitiesResponse abilities(@RequestPayload GetAbilitiesRequest request) {
+	public AbilitiesResponse abilities(@RequestPayload AbilitiesRequest request) {
 		logger.info("Called abilities foir {} {}", request.getPokemon(), POKEMON_API);
+		logDB("abilities");
 		String pokemon = request.getPokemon();
 		Pokemon p = callPokemonApi(POKEMON_API + pokemon);
-		GetAbilitiesResponse response = new GetAbilitiesResponse();
+		AbilitiesResponse response = new AbilitiesResponse();
 		response.getAbilities().addAll(p.getAbilities());
 		return response;
 	}
@@ -54,6 +64,7 @@ public class PokeEndpoint {
 	@ResponsePayload
 	public BaseExperienceResponse base_experience(@RequestPayload BaseExperienceRequest request) {
 		logger.info("Called abilities foir {} {}", request.getPokemon(), POKEMON_API);
+		logDB("base_experience");
 		String pokemon = request.getPokemon();
 		Pokemon p = callPokemonApi(POKEMON_API + pokemon);
 		BaseExperienceResponse response = new BaseExperienceResponse();
@@ -65,6 +76,7 @@ public class PokeEndpoint {
 	@ResponsePayload
 	public HeldItemsResponse held_items(@RequestPayload HeldItemsRequest request) {
 		logger.info("Called held_items foir {} {}", request.getPokemon(), POKEMON_API);
+		logDB("held_items");
 		String pokemon = request.getPokemon();
 		Pokemon p = callPokemonApi(POKEMON_API + pokemon);
 		HeldItemsResponse response = new HeldItemsResponse();
@@ -76,6 +88,7 @@ public class PokeEndpoint {
 	@ResponsePayload
 	public IdResponse id(@RequestPayload IdRequest request) {
 		logger.info("Called id foir {} {}", request.getPokemon(), POKEMON_API);
+		logDB("id");
 		String pokemon = request.getPokemon();
 		Pokemon p = callPokemonApi(POKEMON_API + pokemon);
 		IdResponse response = new IdResponse();
@@ -87,6 +100,7 @@ public class PokeEndpoint {
 	@ResponsePayload
 	public NameResponse name(@RequestPayload NameRequest request) {
 		logger.info("Called abilities foir {} {}", request.getPokemon(), POKEMON_API);
+		logDB("name");
 		String pokemon = request.getPokemon();
 		Pokemon p = callPokemonApi(POKEMON_API + pokemon);
 		NameResponse response = new NameResponse();
@@ -98,6 +112,7 @@ public class PokeEndpoint {
 	@ResponsePayload
 	public LocationAreaEncountersResponse location_area_encounters(@RequestPayload LocationAreaEncountersRequest request) {
 		logger.info("Called location_area_encounters {} {}", request.getPokemon(), POKEMON_API);
+		logDB("location_area_encounters");
 		String pokemon = request.getPokemon();
 		Pokemon p = callPokemonApi(POKEMON_API + pokemon);
 		LocationAreaEncounters[] lae = restTemplate.getForObject(p.getLocationAreaEncounters(), LocationAreaEncounters[].class);
@@ -110,6 +125,12 @@ public class PokeEndpoint {
 		return restTemplate.getForObject(url, Pokemon.class);
 	}
 	
-	
+	private void logDB(String method) {
+		String ip = request.getParameter(method);
+        if (ip == null || "".equals(ip)) {
+        	ip = request.getRemoteAddr();
+        }
+		jdbcTemplate.update("INSERT INTO origin (ip, method) values (?, ?)", ip, method);
+	}
 	
 }
