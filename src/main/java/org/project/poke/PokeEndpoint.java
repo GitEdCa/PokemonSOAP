@@ -99,7 +99,7 @@ public class PokeEndpoint {
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "nameRequest")
 	@ResponsePayload
 	public NameResponse name(@RequestPayload NameRequest request) {
-		logger.info("Called abilities foir {} {}", request.getPokemon(), POKEMON_API);
+		logger.info("Called name for {} {}", request.getPokemon(), POKEMON_API);
 		logDB("name");
 		String pokemon = request.getPokemon();
 		Pokemon p = callPokemonApi(POKEMON_API + pokemon);
